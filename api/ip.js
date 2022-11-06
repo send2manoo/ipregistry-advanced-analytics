@@ -7,7 +7,7 @@ const MongoClient = require("mongodb").MongoClient;
 let cachedDb = null;
 const uri = process.env.VISITORSDB
 console.log("db = " +uri);
-jsonData = {};
+var jsonData;
 
 // A function for connecting to MongoDB,
 // taking a single parameter of the connection string
