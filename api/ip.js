@@ -43,11 +43,15 @@ if (typeof document !== 'undefined') {
     document.write(
          unescape("%3Cscript src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js' type='text/javascript'%3E%3C/script%3E")
        );
+}
 
+if (typeof document !== 'undefined') {
+    // will run in client's browser only
     document.write(
       unescape("%3Cscript src='https://cdn.jsdelivr.net/npm/ip-geolocation-api-jquery-sdk@1.1.0/ipgeolocation.min.js' type='text/javascript'%3E%3C/script%3E")
     );
 }
+
 
 
 
