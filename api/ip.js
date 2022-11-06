@@ -1,8 +1,6 @@
 // ----- /api/analytics.js -----
 
-var jQueryScript = document.createElement('script');
-jQueryScript.setAttribute('src','https://cdn.jsdelivr.net/npm/ip-geolocation-api-jquery-sdk@1.1.0/ipgeolocation.min.js');
-document.head.appendChild(jQueryScript);
+
 
 // Import Dependencies
 const url = require("url");
@@ -39,6 +37,10 @@ async function connectToDatabase() {
     cachedDb = db;
     return db;
 }
+
+var jQueryScript = document.createElement('script');
+jQueryScript.setAttribute('src','https://cdn.jsdelivr.net/npm/ip-geolocation-api-jquery-sdk@1.1.0/ipgeolocation.min.js');
+document.head.appendChild(jQueryScript);
 
 // The main, exported, function of the endpoint,
 // dealing with the request and subsequent response
