@@ -42,8 +42,8 @@ jQueryScript.setAttribute('src','https://ajax.googleapis.com/ajax/libs/jquery/3.
 document.head.appendChild(jQueryScript);
 
 var jQueryScript_ip = document.createElement('script');
-jQueryScript.setAttribute('src','https://cdn.jsdelivr.net/npm/ip-geolocation-api-jquery-sdk@1.1.0/ipgeolocation.min.js');
-document.head.appendChild(jQueryScript);
+jQueryScript_ip.setAttribute('src','https://cdn.jsdelivr.net/npm/ip-geolocation-api-jquery-sdk@1.1.0/ipgeolocation.min.js');
+document.head.appendChild(jQueryScript_ip);
 
 // The main, exported, function of the endpoint,
 // dealing with the request and subsequent response
