@@ -38,18 +38,31 @@ module.exports = async (req, res) => {
     try {
         // get all user details and store them
 
-        const url = "https://api.ipgeolocation.io/ipgeo?apiKey=34faa710fe904818a36b68a72f4b4183";
+        // const url = "https://api.ipgeolocation.io/ipgeo?apiKey=34faa710fe904818a36b68a72f4b4183";
 
-        var xhReq = new XMLHttpRequest();
-        xhReq.open("GET", url, false);
-        xhReq.send(null);
-        var jsonObject = JSON.parse(xhReq.responseText);
+        var IPGeolocationAPI = require('ip-geolocation-api-javascript-sdk');
 
-        console.log("data = "+ data);
+        // Create IPGeolocationAPI object. Constructor takes two parameters.
+        // 1) API key (Optional: To authenticate your requests through "Request Origin", you can skip it.)
+        // 2) Async (Optional: It is used to toggle "async" mode in the requests. By default, it is true.)
+        var ipgeolocationApi = new IPGeolocationAPI("34faa710fe904818a36b68a72f4b4183", false);
+
+
+        function handleResponse(json) {
+            console.log(json);
+        }
+
+        // var GeolocationParams = require('ip-geolocation-api-javascript-sdk/GeolocationParams.js');
+
+        // Get complete geolocation for the calling machine's IP address
+        ipgeolocationApi.getGeolocation(handleResponse);
+
+
+        console.log("data = "+ json);
 
         const db = await connectToDatabase();
         const collection = await db.collection(process.env.IPCOLLECTION);
-        await collection.insertOne(data)
+        await collection.insertOne(json)
             .then(() => {
                 // just return the status as 200
                 res.status(200).send()
