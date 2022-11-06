@@ -3,11 +3,6 @@
         "node": "16.x"
     },
     "dependencies": {
-        "mongodb": "^3.5.7",
-        "node-fetch": "^3.2.10"
+        "mongodb": "^3.5.7"
     }
-    {
-    "type": "module"
-    }
-
 }
