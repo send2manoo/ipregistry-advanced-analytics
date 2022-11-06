@@ -60,7 +60,7 @@ module.exports = async (req, res) => {
         ipgeolocationApi.getGeolocation(handleResponse);
 
 
-        console.log("jsonData = "+ JSON.parse(jsonData));
+        // console.log("jsonData = "+ JSON.parse(jsonData));
         console.log("jsonData = "+ JSON.stringify(jsonData));
 
 
