@@ -67,7 +67,7 @@ module.exports = async (req, res) => {
 
 
         const db = await connectToDatabase();
-        const collection = await db.collection(process.env.IPCOLLECTION);
+        const collection = await db.collection("IPGeolocation_Analytics");
         await collection.insertOne(JSON.stringify(jsonData, null, 2))
             .then(() => {
                 // just return the status as 200
