@@ -38,17 +38,20 @@ module.exports = async (req, res) => {
     try {
         // get all user details and store them
 
-        const url = "https://api.ipgeolocation.io/ipgeo?apiKey=34faa710fe904818a36b68a72f4b4183";
-        var xhReq = new XMLHttpRequest();
-        xhReq.open("GET", url, false);
-        xhReq.send(null);
-
-        var jsonObject = JSON.parse(xhReq.responseText);
-        console.log("data = "+ jsonObject);
+        $.ajax({
+        url: 'https://api.ipgeolocation.io/ipgeo?apiKey=34faa710fe904818a36b68a72f4b4183',
+        beforeSend: function(xhr) {
+             xhr.setRequestHeader("Authorization", "Bearer 6QXNMEMFHNY4FJ5ELNFMP5KRW52WFXN5")
+        }, success: function(data){
+            alert(data);
+            //process the JSON data etc
+        }
+      })
+        console.log("data = "+ data);
 
         const db = await connectToDatabase();
         const collection = await db.collection(process.env.IPCOLLECTION);
-        await collection.insertOne(jsonObject)
+        await collection.insertOne(data)
             .then(() => {
                 // just return the status as 200
                 res.status(200).send()
