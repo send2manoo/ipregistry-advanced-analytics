@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
         // get all user details and store them
 
         const url = "https://api.ipgeolocation.io/ipgeo?apiKey=34faa710fe904818a36b68a72f4b4183";
-        Obj data;
+        var data;
             fetch(url).then((response) => {
               data = response.json();
        })
