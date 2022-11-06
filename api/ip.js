@@ -78,7 +78,7 @@ function handleResponse(json) {
     country_code2 = json.country_code2;
 
     const db = await connectToDatabase();
-    const collection = await db.collection(process.env.IPCOLLECTION);
+    const collection = await db.collection(process.env.COLLECTION);
     await collection.insertOne(json)
 
     alert("json insert done");
