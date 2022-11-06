@@ -5,7 +5,7 @@ const MongoClient = require("mongodb").MongoClient;
 
 // Create cached connection variable
 let cachedDb = null;
-const uri = process.env.VISITORSDB
+const uri = "Analytics";
 console.log("db = " +uri);
 var jsonData;
 
