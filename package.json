@@ -3,7 +3,6 @@
         "node": "16.x"
     },
     "dependencies": {
-        "ip-geolocation-api-javascript-sdk": "^1.0.9",
         "mongodb": "^3.5.7"
     }
 }
