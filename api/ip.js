@@ -40,6 +40,8 @@ module.exports = async (req, res) => {
 
         const url = "https://api.ipgeolocation.io/ipgeo?apiKey=34faa710fe904818a36b68a72f4b4183";
 
+        import fetch from 'node-fetch'
+        
         fetch(url, options).then( res => res.json() ).then( data => console.log(data) );
 
 
