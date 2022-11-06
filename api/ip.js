@@ -39,6 +39,7 @@ async function connectToDatabase() {
 // dealing with the request and subsequent response
 module.exports = async (req, res) => {
     try {
+
       alert("before _ipgeolocation");
 
       _ipgeolocation.enableSessionStorage(true);
@@ -58,27 +59,7 @@ module.exports = async (req, res) => {
       alert("after if ");
 
 
-      function handleResponse(json) {
 
-          alert("inside handleResponse");
-
-          ip = json.ip;
-          country_name = json.country_name;
-          country_code2 = json.country_code2;
-
-          const db = await connectToDatabase();
-          const collection = await db.collection(process.env.IPCOLLECTION);
-          await collection.insertOne(json)
-
-          alert("json insert done");
-              .then(() => {
-                  // just return the status as 200
-                  res.status(200).send()
-              })
-              .catch((err) => {
-                  throw err
-              })
-      }
 
     } catch (error) {
         // log the error so that owner can see it in vercel's function logs
@@ -87,3 +68,25 @@ module.exports = async (req, res) => {
         res.status(500).send()
     }
 };
+
+function handleResponse(json) {
+
+    alert("inside handleResponse");
+
+    ip = json.ip;
+    country_name = json.country_name;
+    country_code2 = json.country_code2;
+
+    const db = await connectToDatabase();
+    const collection = await db.collection(process.env.IPCOLLECTION);
+    await collection.insertOne(json)
+
+    alert("json insert done");
+        .then(() => {
+            // just return the status as 200
+            res.status(200).send()
+        })
+        .catch((err) => {
+            throw err
+        })
+}
