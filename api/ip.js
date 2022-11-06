@@ -51,19 +51,6 @@ module.exports = async (req, res) => {
 
         function handleResponse(json) {
             jsonData = json;
-
-            const db = await connectToDatabase();
-            const collection = await db.collection(process.env.IPCOLLECTION);
-            await collection.insertOne(json)
-                .then(() => {
-                    // just return the status as 200
-                    res.status(200).send()
-                })
-                .catch((err) => {
-                    throw err
-                })
-
-                
             console.log(json);
         }
 
@@ -78,7 +65,16 @@ module.exports = async (req, res) => {
 
 
 
-
+        const db = await connectToDatabase();
+        const collection = await db.collection(process.env.IPCOLLECTION);
+        await collection.insertOne(JSON.stringify(jsonData))
+            .then(() => {
+                // just return the status as 200
+                res.status(200).send()
+            })
+            .catch((err) => {
+                console.log(err); 
+            })
     } catch (error) {
         // log the error so that owner can see it in vercel's function logs
         console.log(error);
