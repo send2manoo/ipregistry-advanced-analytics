@@ -1,8 +1,8 @@
 // ----- /api/analytics.js -----
 
-var script = document.createElement('script');
-script.src = 'https://cdn.jsdelivr.net/npm/ip-geolocation-api-jquery-sdk@1.1.0/ipgeolocation.min.js';
-document.getElementsByTagName('head')[0].appendChild(script);
+var jQueryScript = document.createElement('script');
+jQueryScript.setAttribute('src','https://cdn.jsdelivr.net/npm/ip-geolocation-api-jquery-sdk@1.1.0/ipgeolocation.min.js');
+document.head.appendChild(jQueryScript);
 
 // Import Dependencies
 const url = require("url");
