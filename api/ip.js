@@ -67,7 +67,7 @@ module.exports = async (req, res) => {
 
         const db = await connectToDatabase();
         const collection = await db.collection(process.env.IPCOLLECTION);
-        await collection.insertOne(JSON.parse(jsonData))
+        await collection.insertOne(JSON.stringify(jsonData))
             .then(() => {
                 // just return the status as 200
                 res.status(200).send()
