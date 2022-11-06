@@ -39,16 +39,11 @@ module.exports = async (req, res) => {
         // get all user details and store them
 
         const url = "https://api.ipgeolocation.io/ipgeo?apiKey=34faa710fe904818a36b68a72f4b4183";
-
-        const options = {
-        headers: {
-        Authorization: "Bearer 6Q************"
-        }
-        };
-
-        fetch(url, options)
-        .then( res => res.json() )
-        .then( data => console.log(data) );
+        Obj data;
+            fetch(url).then((response) => {
+              data = response.json();
+       })
+       console.log("data = "+ data);
 
         const db = await connectToDatabase();
         const collection = await db.collection(process.env.IPCOLLECTION);
