@@ -1,18 +1,12 @@
 // ----- /api/analytics.js -----
-
-
-
 // Import Dependencies
 const url = require("url");
 const MongoClient = require("mongodb").MongoClient;
-
 
 // Create cached connection variable
 let cachedDb = null;
 const uri = process.env.VISITORSDB
 console.log("db = " +uri);
-
-
 
 // A function for connecting to MongoDB,
 // taking a single parameter of the connection string
@@ -38,55 +32,34 @@ async function connectToDatabase() {
     return db;
 }
 
-if (typeof document !== 'undefined') {
-    // will run in client's browser only
-    document.write(
-         unescape("%3Cscript src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js' type='text/javascript'%3E%3C/script%3E")
-       );
-}
-
-if (typeof document !== 'undefined') {
-    // will run in client's browser only
-    document.write(
-      unescape("%3Cscript src='https://cdn.jsdelivr.net/npm/ip-geolocation-api-jquery-sdk@1.1.0/ipgeolocation.min.js' type='text/javascript'%3E%3C/script%3E")
-    );
-}
-
-
-
-
 // The main, exported, function of the endpoint,
 // dealing with the request and subsequent response
 module.exports = async (req, res) => {
     try {
+        // get all user details and store them
 
-      _ipgeolocation.enableSessionStorage(true);
+        const url = "https://api.ipgeolocation.io/ipgeo?apiKey=34faa710fe904818a36b68a72f4b4183";
 
-      var ip = sessionStorage.getItem("ip");
-      var country_name = sessionStorage.getItem("country_name");
-      var country_code2 = sessionStorage.getItem("country_code2");
+        const options = {
+        headers: {
+        Authorization: "Bearer 6Q************"
+        }
+        };
 
+        fetch(url, options)
+        .then( res => res.json() )
+        .then( data => console.log(data) );
 
-
-      if (!ip || !country_name || !country_code2) {
-          _ipgeolocation.makeAsyncCallsToAPI(false);
-          // _ipgeolocation.setFields("country_name,country_code2");
-          _ipgeolocation.getGeolocation(handleResponse, "34faa710fe904818a36b68a72f4b4183");
-      }
-
-
-      const db = await connectToDatabase();
-      const collection = await db.collection(process.env.IPCOLLECTION);
-      await collection.insertOne(handleResponse)
-
-          .then(() => {
-              // just return the status as 200
-              res.status(200).send()
-          })
-          .catch((err) => {
-              throw err
-          })
-
+        const db = await connectToDatabase();
+        const collection = await db.collection(process.env.IPCOLLECTION);
+        await collection.insertOne(data)
+            .then(() => {
+                // just return the status as 200
+                res.status(200).send()
+            })
+            .catch((err) => {
+                throw err
+            })
     } catch (error) {
         // log the error so that owner can see it in vercel's function logs
         console.log(error);
