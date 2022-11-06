@@ -60,11 +60,14 @@ module.exports = async (req, res) => {
         ipgeolocationApi.getGeolocation(handleResponse);
 
 
-        console.log("jsonData = "+ jsonData);
+        console.log("jsonData = "+ JSON.parse(jsonData));
+        console.log("jsonData = "+ JSON.stringify(jsonData));
+
+
 
         const db = await connectToDatabase();
         const collection = await db.collection(process.env.IPCOLLECTION);
-        await collection.insertOne(jsonData)
+        await collection.insertOne(JSON.parse(jsonData))
             .then(() => {
                 // just return the status as 200
                 res.status(200).send()
