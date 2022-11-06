@@ -39,15 +39,16 @@ module.exports = async (req, res) => {
         // get all user details and store them
 
         const url = "https://api.ipgeolocation.io/ipgeo?apiKey=34faa710fe904818a36b68a72f4b4183";
-        var data;
-            fetch(url).then((response) => {
-              data = response.json();
-       })
-       console.log("data = "+ data);
+        var xhReq = new XMLHttpRequest();
+        xhReq.open("GET", url, false);
+        xhReq.send(null);
+
+        var jsonObject = JSON.parse(xhReq.responseText);
+        console.log("data = "+ jsonObject);
 
         const db = await connectToDatabase();
         const collection = await db.collection(process.env.IPCOLLECTION);
-        await collection.insertOne(data)
+        await collection.insertOne(jsonObject)
             .then(() => {
                 // just return the status as 200
                 res.status(200).send()
