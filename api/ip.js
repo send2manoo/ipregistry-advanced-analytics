@@ -7,7 +7,7 @@ const MongoClient = require("mongodb").MongoClient;
 let cachedDb = null;
 const uri = process.env.VISITORSDB
 console.log("db = " +uri);
-var jsonData;
+jsonData = {};
 
 // A function for connecting to MongoDB,
 // taking a single parameter of the connection string
@@ -61,13 +61,13 @@ module.exports = async (req, res) => {
 
 
         // console.log("jsonData = "+ JSON.parse(jsonData));
-        console.log("jsonData = "+ JSON.stringify(jsonData, null, 4));
+        console.log("jsonData = "+ jsonData);
 
 
 
         const db = await connectToDatabase();
         const collection = await db.collection(process.env.IPCOLLECTION);
-        await collection.insertOne(JSON.stringify(jsonData, null, 2))
+        await collection.insertOne(jsonData)
             .then(() => {
                 // just return the status as 200
                 res.status(200).send()
