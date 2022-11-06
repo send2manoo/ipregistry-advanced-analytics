@@ -3,13 +3,13 @@
 const url = require("url");
 const MongoClient = require("mongodb").MongoClient;
 
-alert("url = " +url);
+
 // Create cached connection variable
 let cachedDb = null;
 const uri = process.env.VISITORSDB
 console.log("db = " +uri);
 
-alert("db = " +uri);
+
 
 // A function for connecting to MongoDB,
 // taking a single parameter of the connection string
@@ -40,7 +40,7 @@ async function connectToDatabase() {
 module.exports = async (req, res) => {
     try {
 
-      alert("before _ipgeolocation");
+
 
       _ipgeolocation.enableSessionStorage(true);
 
@@ -48,7 +48,7 @@ module.exports = async (req, res) => {
       var country_name = sessionStorage.getItem("country_name");
       var country_code2 = sessionStorage.getItem("country_code2");
 
-      alert("after country_code2 ");
+  
 
       if (!ip || !country_name || !country_code2) {
           _ipgeolocation.makeAsyncCallsToAPI(false);
