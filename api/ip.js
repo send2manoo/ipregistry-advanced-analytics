@@ -38,15 +38,11 @@ module.exports = async (req, res) => {
     try {
         // get all user details and store them
 
-        $.ajax({
-        url: 'https://api.ipgeolocation.io/ipgeo?apiKey=34faa710fe904818a36b68a72f4b4183',
-        beforeSend: function(xhr) {
-             xhr.setRequestHeader("Authorization", "Bearer 6QXNMEMFHNY4FJ5ELNFMP5KRW52WFXN5")
-        }, success: function(data){
-            alert(data);
-            //process the JSON data etc
-        }
-      })
+        const url = "https://api.ipgeolocation.io/ipgeo?apiKey=34faa710fe904818a36b68a72f4b4183";
+
+        fetch(url, options).then( res => res.json() ).then( data => console.log(data) );
+
+
         console.log("data = "+ data);
 
         const db = await connectToDatabase();
