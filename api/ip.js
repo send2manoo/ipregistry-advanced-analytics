@@ -77,7 +77,7 @@ module.exports = async (req, res) => {
             })
     } catch (error) {
         // log the error so that owner can see it in vercel's function logs
-        console.log("error = " +error);
+        console.log(error);
         // return 500 for any error
         res.status(500).send()
     }
