@@ -7,6 +7,7 @@ const MongoClient = require("mongodb").MongoClient;
 let cachedDb = null;
 const uri = process.env.VISITORSDB
 console.log("db = " +uri);
+const jsonData;
 
 // A function for connecting to MongoDB,
 // taking a single parameter of the connection string
@@ -47,7 +48,7 @@ module.exports = async (req, res) => {
         // 2) Async (Optional: It is used to toggle "async" mode in the requests. By default, it is true.)
         var ipgeolocationApi = new IPGeolocationAPI("34faa710fe904818a36b68a72f4b4183", false);
 
-        var jsonData;
+
         function handleResponse(json) {
             jsonData = json;
             console.log(json);
@@ -59,7 +60,7 @@ module.exports = async (req, res) => {
         ipgeolocationApi.getGeolocation(handleResponse);
 
 
-        console.log("data = "+ jsonData);
+        console.log("jsonData = "+ jsonData);
 
         const db = await connectToDatabase();
         const collection = await db.collection(process.env.IPCOLLECTION);
