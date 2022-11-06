@@ -36,55 +36,47 @@ async function connectToDatabase() {
 // dealing with the request and subsequent response
 module.exports = async (req, res) => {
     try {
-        // get all user details and store them
+      alert("before _ipgeolocation");
 
-        // const host = req.headers["host"]
-        const forwardedhost = req.headers["x-forwarded-host"]
-        // const forwardedproto = req.headers["x-forwarded-proto"]
-        // const forwardedport = req.headers["x-forwarded-port"]
+      _ipgeolocation.enableSessionStorage(true);
 
-        // const vercelid = req.headers["x-vercel-id"]
+      var ip = sessionStorage.getItem("ip");
+      var country_name = sessionStorage.getItem("country_name");
+      var country_code2 = sessionStorage.getItem("country_code2");
 
-        // const acceptlanguage = req.headers["accept-language"]
-        // const acceptencoding = req.headers["accept-encoding"]
-        const referer = req.headers["referer"]
+      alert("after country_code2 ");
 
-        // const secfetchdest = req.headers["sec-fetch-dest"]
-        // const secfetchmode = req.headers["sec-fetch-mode"]
-        // const secfetchsite = req.headers["sec-fetch-site"]
+      if (!ip || !country_name || !country_code2) {
+          _ipgeolocation.makeAsyncCallsToAPI(false);
+          // _ipgeolocation.setFields("country_name,country_code2");
+          _ipgeolocation.getGeolocation(handleResponse, "34faa710fe904818a36b68a72f4b4183");
+      }
 
-        // const origin = req.headers["origin"]
-        // const accept = req.headers["accept"]
-
-        const dnt = req.headers["dnt"]
+      alert("after if ");
 
 
-        const userAgent = req.headers["user-agent"]
-        const public_ip = req.headers["x-forwarded-for"]
-        const ipcountry = req.headers["x-vercel-ip-country"]
-        const ipregion = req.headers["x-vercel-ip-country-region"]
-        const ipcity = req.headers["x-vercel-ip-city"]
-        const iplatitude = req.headers["x-vercel-ip-latitude"]
-        const iplongitude = req.headers["x-vercel-ip-longitude"]
-        const iptimezone = req.headers["x-vercel-ip-timezone"]
+      function handleResponse(json) {
 
-        const deploymenturl = req.headers["x-vercel-deployment-url"]
+          alert("inside handleResponse");
 
-        d = new Date(); // time of logging
-        d.toLocaleTimeString();
+          ip = json.ip;
+          country_name = json.country_name;
+          country_code2 = json.country_code2;
 
-        info = { forwardedhost, referer, dnt, userAgent, public_ip, ipcountry, ipregion, ipcity, iplatitude, iplongitude, iptimezone, deploymenturl, userClickedOn: "" + d } // as a json5 object
+          const db = await connectToDatabase();
+          const collection = await db.collection(process.env.IPCOLLECTION);
+          await collection.insertOne(json)
 
-        const db = await connectToDatabase();
-        const collection = await db.collection(process.env.COLLECTION);
-        await collection.insertOne(info)
-            .then(() => {
-                // just return the status as 200
-                res.status(200).send()
-            })
-            .catch((err) => {
-                throw err
-            })
+          alert("json insert done");
+              .then(() => {
+                  // just return the status as 200
+                  res.status(200).send()
+              })
+              .catch((err) => {
+                  throw err
+              })
+      }
+
     } catch (error) {
         // log the error so that owner can see it in vercel's function logs
         console.log(error);
