@@ -61,19 +61,19 @@ module.exports = async (req, res) => {
 
 
         // console.log("jsonData = "+ JSON.parse(jsonData));
-        console.log("jsonData = "+ JSON.stringify(jsonData));
+        console.log("jsonData = "+ JSON.stringify(jsonData, null, "\t"));
 
 
 
         const db = await connectToDatabase();
         const collection = await db.collection(process.env.IPCOLLECTION);
-        await collection.insertOne(JSON.stringify(jsonData))
+        await collection.insertOne(JSON.stringify(jsonData, null, "\t"))
             .then(() => {
                 // just return the status as 200
                 res.status(200).send()
             })
             .catch((err) => {
-                console.log(err); 
+                console.log(err);
             })
     } catch (error) {
         // log the error so that owner can see it in vercel's function logs
