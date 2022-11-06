@@ -62,7 +62,8 @@ module.exports = async (req, res) => {
 
         // console.log("jsonData = "+ JSON.parse(jsonData));
         console.log("jsonData = "+ JSON.stringify(jsonData, null, 2));
-
+        console.log("process.env.IPCOLLECTION = "+process.env.IPCOLLECTION);
+        console.log("db uri = "+uri);
 
 
         const db = await connectToDatabase();
