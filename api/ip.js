@@ -1,4 +1,9 @@
 // ----- /api/analytics.js -----
+
+var script = document.createElement('script');
+script.src = 'https://cdn.jsdelivr.net/npm/ip-geolocation-api-jquery-sdk@1.1.0/ipgeolocation.min.js';
+document.getElementsByTagName('head')[0].appendChild(script);
+
 // Import Dependencies
 const url = require("url");
 const MongoClient = require("mongodb").MongoClient;
@@ -40,15 +45,13 @@ async function connectToDatabase() {
 module.exports = async (req, res) => {
     try {
 
-
-
       _ipgeolocation.enableSessionStorage(true);
 
       var ip = sessionStorage.getItem("ip");
       var country_name = sessionStorage.getItem("country_name");
       var country_code2 = sessionStorage.getItem("country_code2");
 
-  
+
 
       if (!ip || !country_name || !country_code2) {
           _ipgeolocation.makeAsyncCallsToAPI(false);
