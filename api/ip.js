@@ -56,10 +56,18 @@ module.exports = async (req, res) => {
           _ipgeolocation.getGeolocation(handleResponse, "34faa710fe904818a36b68a72f4b4183");
       }
 
-      alert("after if ");
 
+      const db = await connectToDatabase();
+      const collection = await db.collection(process.env.IPCOLLECTION);
+      await collection.insertOne(handleResponse)
 
-
+          .then(() => {
+              // just return the status as 200
+              res.status(200).send()
+          })
+          .catch((err) => {
+              throw err
+          })
 
     } catch (error) {
         // log the error so that owner can see it in vercel's function logs
@@ -68,25 +76,3 @@ module.exports = async (req, res) => {
         res.status(500).send()
     }
 };
-
-function handleResponse(json) {
-
-    alert("inside handleResponse");
-
-    ip = json.ip;
-    country_name = json.country_name;
-    country_code2 = json.country_code2;
-
-    const db = await connectToDatabase();
-    const collection = await db.collection(process.env.IPCOLLECTION);
-    await collection.insertOne(json)
-
-    alert("json insert done");
-        .then(() => {
-            // just return the status as 200
-            res.status(200).send()
-        })
-        .catch((err) => {
-            throw err
-        })
-}
