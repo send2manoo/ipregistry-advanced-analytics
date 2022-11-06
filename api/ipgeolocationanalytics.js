@@ -36,6 +36,7 @@ async function connectToDatabase() {
 // dealing with the request and subsequent response
 module.exports = async (req, res) => {
     try {
+      alert("before _ipgeolocation");
 
       _ipgeolocation.enableSessionStorage(true);
 
@@ -43,20 +44,30 @@ module.exports = async (req, res) => {
       var country_name = sessionStorage.getItem("country_name");
       var country_code2 = sessionStorage.getItem("country_code2");
 
+      alert("after country_code2 ");
+
       if (!ip || !country_name || !country_code2) {
           _ipgeolocation.makeAsyncCallsToAPI(false);
           // _ipgeolocation.setFields("country_name,country_code2");
           _ipgeolocation.getGeolocation(handleResponse, "34faa710fe904818a36b68a72f4b4183");
       }
 
+      alert("after if ");
+
+
       function handleResponse(json) {
+
+          alert("inside handleResponse");
+
           ip = json.ip;
           country_name = json.country_name;
           country_code2 = json.country_code2;
-          console.log(json);
+
           const db = await connectToDatabase();
           const collection = await db.collection(process.env.IPCOLLECTION);
           await collection.insertOne(json)
+
+          alert("json insert done");
               .then(() => {
                   // just return the status as 200
                   res.status(200).send()
