@@ -61,7 +61,7 @@ module.exports = async (req, res) => {
 
 
         // console.log("jsonData = "+ JSON.parse(jsonData));
-        console.log("jsonData = "+ JSON.stringify(jsonData, null, 2);
+        console.log("jsonData = "+ JSON.stringify(jsonData, null, 2));
 
 
 
