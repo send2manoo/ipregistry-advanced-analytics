@@ -47,7 +47,7 @@ module.exports = async (req, res) => {
 
         client.lookup(public_ip).then(response => {
             jsonData = response.data;
-            console.log("JSON.stringify(jsonData) ="+JSON.stringify(jsonData));
+            console.log("JSON.stringify(jsonData)= "+JSON.stringify(jsonData));
         }).catch(error => {
             console.err(error);
         })
