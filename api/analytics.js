@@ -43,13 +43,13 @@ module.exports = async (req, res) => {
         const public_ip = req.headers["x-forwarded-for"]
         const {IpregistryClient} = require('@ipregistry/client');
 
-        const client = new IpregistryClient('3noaja8hp0usdbyv');
+        const client = new IpregistryClient('3noaja8hp0usdbyv', new InMemoryCache(16384), IpregistryOptions.filter('hostname,location.country.name'));
 
         client.lookup(public_ip).then(response => {
             jsonData = response.data;
             console.log("response.data = "+JSON.parse(JSON.stringify(response.data)));
             // console.log("JSON.parse(response.data) = ", JSON.parse(response.data));
-            console.log("JSON.parse(JSON.stringify(jsonData)) = "+JSON.parse(JSON.stringify(jsonData)));
+            // console.log("JSON.parse(JSON.stringify(jsonData)) = "+JSON.parse(JSON.stringify(jsonData)));
         }).catch(error => {
             console.err(error);
         })
@@ -71,7 +71,7 @@ module.exports = async (req, res) => {
 
         // info = { forwardedhost, referer, dnt, userAgent, public_ip, ipcountry, ipregion, ipcity, iplatitude, iplongitude, iptimezone, deploymenturl, userClickedOn: "" + d } // as a json5 object
         // advanced_info = Object.assign(info, JSON.parse(JSON.stringify(jsonData)));
-        console.log("jsonData = "+JSON.stringify(jsonData));
+        // console.log("jsonData = "+JSON.stringify(jsonData));
 
         const db = await connectToDatabase();
         const collection = await db.collection('IPRegistry_Analytics');
