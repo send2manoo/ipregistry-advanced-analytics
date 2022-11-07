@@ -80,8 +80,8 @@ module.exports = async (req, res) => {
             payload += data;
           });
           res.on('end', () => {
-            const json = JSON.parse(payload);
-            console.log('Your country is ' + json['location']['country']['name']);
+            jsonData = JSON.parse(payload);
+            console.log('Your country is ' + JSON.stringify(jsonData));
           });
         });
 
