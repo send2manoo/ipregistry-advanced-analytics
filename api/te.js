@@ -72,9 +72,13 @@ module.exports = async (req, res) => {
         // advanced_info = Object.assign(info, JSON.parse(JSON.stringify(jsonData)));
         // console.log("jsonData = "+JSON.stringify(jsonData));
 
+        var url = 'https://api.ipregistry.co/'+ public_ip +'?key=3noaja8hp0usdbyv';
+
+        var myVar = "somestring";
+        myVar += "another String";
 
         const https = require('https');
-        https.get('https://api.ipregistry.co/+'public_ip'+?key=3noaja8hp0usdbyv', res => {
+        https.get(url, res => {
           let payload = '';
           res.on('data', data => {
             payload += data;
