@@ -52,6 +52,7 @@ module.exports = async (req, res) => {
         //     console.err(error);
         // })
 
+        // COMMENTS BY MANOHAR ON NOV 7 18:49 PM INSTALL:-  npm i xmlhttprequest BEFORE USE XMLHttpRequest() 
         var request = new XMLHttpRequest();
         request.onreadystatechange = function() {
             if (request.readyState === 4 && request.status === 200) {
