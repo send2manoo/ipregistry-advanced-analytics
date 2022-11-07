@@ -53,13 +53,13 @@ module.exports = async (req, res) => {
         // })
 
         import fetch from "node-fetch";
-        
+
         fetch('https://api.ipregistry.co/?key=3noaja8hp0usdbyv')
         .then(function (response) {
             return response.json();
         })
         .then(function (jsonData) {
-            console.log('Your country is ' + jsonData['location']['country']['name']);
+            console.log('Your country is  ' + jsonData['location']['country']['name']);
         });
 
 
