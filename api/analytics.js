@@ -7,6 +7,7 @@ const MongoClient = require("mongodb").MongoClient;
 let cachedDb = null;
 const uri = process.env.VISITORSDB
 console.log("db = " +uri);
+var jsonData;
 
 // A function for connecting to MongoDB,
 // taking a single parameter of the connection string
@@ -37,47 +38,40 @@ async function connectToDatabase() {
 module.exports = async (req, res) => {
     try {
         // get all user details and store them
-
-        // const host = req.headers["host"]
-        const forwardedhost = req.headers["x-forwarded-host"]
-        // const forwardedproto = req.headers["x-forwarded-proto"]
-        // const forwardedport = req.headers["x-forwarded-port"]
-
-        // const vercelid = req.headers["x-vercel-id"]
-
-        // const acceptlanguage = req.headers["accept-language"]
-        // const acceptencoding = req.headers["accept-encoding"]
-        const referer = req.headers["referer"]
-
-        // const secfetchdest = req.headers["sec-fetch-dest"]
-        // const secfetchmode = req.headers["sec-fetch-mode"]
-        // const secfetchsite = req.headers["sec-fetch-site"]
-
-        // const origin = req.headers["origin"]
-        // const accept = req.headers["accept"]
-
-        const dnt = req.headers["dnt"]
-
-
-        const userAgent = req.headers["user-agent"]
         const public_ip = req.headers["x-forwarded-for"]
-        const ipcountry = req.headers["x-vercel-ip-country"]
-        const ipregion = req.headers["x-vercel-ip-country-region"]
-        const ipcity = req.headers["x-vercel-ip-city"]
-        const iplatitude = req.headers["x-vercel-ip-latitude"]
-        const iplongitude = req.headers["x-vercel-ip-longitude"]
-        const iptimezone = req.headers["x-vercel-ip-timezone"]
+        const {IpregistryClient} = require('@ipregistry/client');
 
-        const deploymenturl = req.headers["x-vercel-deployment-url"]
+        const client = new IpregistryClient('3noaja8hp0usdbyv');
 
-        d = new Date(); // time of logging
-        d.toLocaleTimeString();
+        client.lookup(public_ip).then(response => {
+            jsonData = response.data;
+            console.log(response.data);
+        }).catch(error => {
+            console.err(error);
+        })
 
-        info = { forwardedhost, referer, dnt, userAgent, public_ip, ipcountry, ipregion, ipcity, iplatitude, iplongitude, iptimezone, deploymenturl, userClickedOn: "" + d } // as a json5 object
+        // const forwardedhost = req.headers["x-forwarded-host"]
+        // const referer = req.headers["referer"]
+        // const dnt = req.headers["dnt"]
+        // const userAgent = req.headers["user-agent"]
+        // const ipcountry = req.headers["x-vercel-ip-country"]
+        // const ipregion = req.headers["x-vercel-ip-country-region"]
+        // const ipcity = req.headers["x-vercel-ip-city"]
+        // const iplatitude = req.headers["x-vercel-ip-latitude"]
+        // const iplongitude = req.headers["x-vercel-ip-longitude"]
+        // const iptimezone = req.headers["x-vercel-ip-timezone"]
+        // const deploymenturl = req.headers["x-vercel-deployment-url"]
+
+        // d = new Date(); // time of logging
+        // d.toLocaleTimeString();
+
+        // info = { forwardedhost, referer, dnt, userAgent, public_ip, ipcountry, ipregion, ipcity, iplatitude, iplongitude, iptimezone, deploymenturl, userClickedOn: "" + d } // as a json5 object
+        // advanced_info = Object.assign(info, JSON.parse(JSON.stringify(jsonData)));
+        console.log("jsonData = "+JSON.parse(JSON.stringify(jsonData)));
 
         const db = await connectToDatabase();
         const collection = await db.collection(process.env.COLLECTION);
-        await collection.insertOne(info)
+        await collection.insertOne(JSON.parse(JSON.stringify(jsonData)))
             .then(() => {
                 // just return the status as 200
                 res.status(200).send()

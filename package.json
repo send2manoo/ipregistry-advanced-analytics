@@ -3,6 +3,7 @@
         "node": "16.x"
     },
     "dependencies": {
+        "@ipregistry/client": "^4.5.0",
         "mongodb": "^3.5.7"
     }
 }
