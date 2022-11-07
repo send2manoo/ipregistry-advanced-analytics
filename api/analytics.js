@@ -53,25 +53,6 @@ module.exports = async (req, res) => {
             console.err(error);
         })
 
-        // const forwardedhost = req.headers["x-forwarded-host"]
-        // const referer = req.headers["referer"]
-        // const dnt = req.headers["dnt"]
-        // const userAgent = req.headers["user-agent"]
-        // const ipcountry = req.headers["x-vercel-ip-country"]
-        // const ipregion = req.headers["x-vercel-ip-country-region"]
-        // const ipcity = req.headers["x-vercel-ip-city"]
-        // const iplatitude = req.headers["x-vercel-ip-latitude"]
-        // const iplongitude = req.headers["x-vercel-ip-longitude"]
-        // const iptimezone = req.headers["x-vercel-ip-timezone"]
-        // const deploymenturl = req.headers["x-vercel-deployment-url"]
-
-        // d = new Date(); // time of logging
-        // d.toLocaleTimeString();
-
-        // info = { forwardedhost, referer, dnt, userAgent, public_ip, ipcountry, ipregion, ipcity, iplatitude, iplongitude, iptimezone, deploymenturl, userClickedOn: "" + d } // as a json5 object
-        // advanced_info = Object.assign(info, JSON.parse(JSON.stringify(jsonData)));
-        // console.log("jsonData = "+JSON.stringify(jsonData));
-
         const db = await connectToDatabase();
         const collection = await db.collection(process.env.COLLECTION);
         await collection.insertOne(JSON.parse(JSON.stringify(jsonData)))

@@ -38,45 +38,12 @@ async function connectToDatabase() {
 // dealing with the request and subsequent response
 module.exports = async (req, res) => {
     try {
-        // get all user details and store them
-        const public_ip = req.headers["x-forwarded-for"]
-        // const {IpregistryClient} = require('@ipregistry/client');
-        //
-        // const client = new IpregistryClient('3noaja8hp0usdbyv');
-        //
-        // client.lookup(public_ip).then(response => {
-        //     jsonData = response.data;
-        //     console.log("response.data = "+JSON.parse(JSON.stringify(response.data)));
-        //     // console.log("JSON.parse(response.data) = ", JSON.parse(response.data));
-        //     // console.log("JSON.parse(JSON.stringify(jsonData)) = "+JSON.parse(JSON.stringify(jsonData)));
-        // }).catch(error => {
-        //     console.err(error);
-        // })
+        // const public_ip = req.headers["x-forwarded-for"]
 
-        // const forwardedhost = req.headers["x-forwarded-host"]
-        // const referer = req.headers["referer"]
-        // const dnt = req.headers["dnt"]
-        // const userAgent = req.headers["user-agent"]
-        // const ipcountry = req.headers["x-vercel-ip-country"]
-        // const ipregion = req.headers["x-vercel-ip-country-region"]
-        // const ipcity = req.headers["x-vercel-ip-city"]
-        // const iplatitude = req.headers["x-vercel-ip-latitude"]
-        // const iplongitude = req.headers["x-vercel-ip-longitude"]
-        // const iptimezone = req.headers["x-vercel-ip-timezone"]
-        // const deploymenturl = req.headers["x-vercel-deployment-url"]
+        /*This endpoint makes sense when it is invoked from a client browser only. If you invoke it from a server node, we will return IP data for the IP from where the request originates, meaning your server IP address. Each origin IP lookup request costs 1 credit.*/
 
-        // d = new Date(); // time of logging
-        // d.toLocaleTimeString();
-
-        // info = { forwardedhost, referer, dnt, userAgent, public_ip, ipcountry, ipregion, ipcity, iplatitude, iplongitude, iptimezone, deploymenturl, userClickedOn: "" + d } // as a json5 object
-        // advanced_info = Object.assign(info, JSON.parse(JSON.stringify(jsonData)));
-        // console.log("jsonData = "+JSON.stringify(jsonData));
-
-        var url = 'https://api.ipregistry.co/'+ public_ip +'?key=3noaja8hp0usdbyv';
-
-        var myVar = "somestring";
-        myVar += "another String";
-
+        // var url = 'https://api.ipregistry.co/'+ public_ip +'?key=3noaja8hp0usdbyv';
+        var url = 'https://api.ipregistry.co/?key=3noaja8hp0usdbyv'
         const https = require('https');
         https.get(url, res => {
           let payload = '';
