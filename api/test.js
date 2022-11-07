@@ -52,16 +52,16 @@ module.exports = async (req, res) => {
         //     console.err(error);
         // })
 
-        var request = new XMLHttpRequest();
-        request.onreadystatechange = function() {
-            if (request.readyState === 4 && request.status === 200) {
-                jsonData = JSON.parse(request.responseText);
-                console.log('Your country is ' + jsonData['location']['country']['name']);
-                console.log("jsonData = "+ jsonData);
-            }
-        };
-        request.open('GET', 'https://api.ipregistry.co/?key=3noaja8hp0usdbyv', true);
-        request.send(null);
+
+        fetch('https://api.ipregistry.co/?key=3noaja8hp0usdbyv')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (jsonData) {
+            console.log('Your country is ' + jsonData['location']['country']['name']);
+        });
+
+    
 
 
         const db = await connectToDatabase();
