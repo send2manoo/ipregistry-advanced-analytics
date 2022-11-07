@@ -5,8 +5,7 @@ const MongoClient = require("mongodb").MongoClient;
 
 // Create cached connection variable
 let cachedDb = null;
-// const uri = process.env.VISITORSDB
-const uri = 'mongodb+srv://ackee:DjiQC6uIY2PYlTcv@cluster0.ke4trug.mongodb.net/Analytics?retryWrites=true&w=majority'
+const uri = process.env.VISITORSDB
 
 console.log("db = " +uri);
 var jsonData;
@@ -74,7 +73,7 @@ module.exports = async (req, res) => {
         // console.log("jsonData = "+JSON.stringify(jsonData));
 
         const db = await connectToDatabase();
-        const collection = await db.collection('IPRegistry_Analytics');
+        const collection = await db.collection(process.env.COLLECTION);
         await collection.insertOne(JSON.parse(JSON.stringify(jsonData)))
             .then(() => {
                 // just return the status as 200
