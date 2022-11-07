@@ -36,6 +36,8 @@ async function connectToDatabase() {
 
 // The main, exported, function of the endpoint,
 // dealing with the request and subsequent response
+import axios from 'axios';
+
 module.exports = async (req, res) => {
     try {
         // get all user details and store them
@@ -53,15 +55,10 @@ module.exports = async (req, res) => {
         // })
 
         // COMMENTS BY MANOHAR ON NOV 7 18:49 PM INSTALL:-  npm i xmlhttprequest BEFORE USE XMLHttpRequest()
-        var request = new XMLHttpRequest();
-        request.onreadystatechange = function() {
-            if (request.readyState === 4 && request.status === 200) {
-                jsonData = JSON.parse(request.responseText);
-                console.log('Your country is  ' + JSON.stringify(jsonData));
-            }
-        };
-        request.open('GET', 'https://api.ipregistry.co/?key=3noaja8hp0usdbyv', true);
-        request.send(null);
+
+        jsonData = await axios.get('https://api.ipregistry.co/?key=3noaja8hp0usdbyv');
+        console.log("JSON.stringify(jsonData) = "+JSON.stringify(jsonData));
+
 
         const db = await connectToDatabase();
         const collection = await db.collection(process.env.COLLECTION);
