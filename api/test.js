@@ -52,17 +52,15 @@ module.exports = async (req, res) => {
         //     console.err(error);
         // })
 
-        import fetch from "node-fetch";
-
-        fetch('https://api.ipregistry.co/?key=3noaja8hp0usdbyv')
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (json) {
-            console.log('Your country is ' + json['location']['country']['name']);
-        });
-
-
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+            if (request.readyState === 4 && request.status === 200) {
+                jsonData = JSON.parse(request.responseText);
+                console.log('Your country is ' + JSON.stringify(jsonData);
+            }
+        };
+        request.open('GET', 'https://api.ipregistry.co/?key=3noaja8hp0usdbyv', true);
+        request.send(null);
 
         const db = await connectToDatabase();
         const collection = await db.collection(process.env.COLLECTION);
