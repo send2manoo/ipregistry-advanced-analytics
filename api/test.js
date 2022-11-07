@@ -58,10 +58,9 @@ module.exports = async (req, res) => {
         .then(function (response) {
             return response.json();
         })
-        .then(function (jsonData) {
-            console.log('Your country is  ' + jsonData['location']['country']['name']);
+        .then(function (json) {
+            console.log('Your country is ' + json['location']['country']['name']);
         });
-
 
 
 
