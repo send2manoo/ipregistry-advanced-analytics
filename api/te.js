@@ -39,19 +39,19 @@ async function connectToDatabase() {
 module.exports = async (req, res) => {
     try {
         // get all user details and store them
-        const public_ip = req.headers["x-forwarded-for"]
-        const {IpregistryClient} = require('@ipregistry/client');
-
-        const client = new IpregistryClient('3noaja8hp0usdbyv');
-
-        client.lookup(public_ip).then(response => {
-            jsonData = response.data;
-            console.log("response.data = "+JSON.parse(JSON.stringify(response.data)));
-            // console.log("JSON.parse(response.data) = ", JSON.parse(response.data));
-            // console.log("JSON.parse(JSON.stringify(jsonData)) = "+JSON.parse(JSON.stringify(jsonData)));
-        }).catch(error => {
-            console.err(error);
-        })
+        // const public_ip = req.headers["x-forwarded-for"]
+        // const {IpregistryClient} = require('@ipregistry/client');
+        //
+        // const client = new IpregistryClient('3noaja8hp0usdbyv');
+        //
+        // client.lookup(public_ip).then(response => {
+        //     jsonData = response.data;
+        //     console.log("response.data = "+JSON.parse(JSON.stringify(response.data)));
+        //     // console.log("JSON.parse(response.data) = ", JSON.parse(response.data));
+        //     // console.log("JSON.parse(JSON.stringify(jsonData)) = "+JSON.parse(JSON.stringify(jsonData)));
+        // }).catch(error => {
+        //     console.err(error);
+        // })
 
         // const forwardedhost = req.headers["x-forwarded-host"]
         // const referer = req.headers["referer"]
@@ -71,6 +71,20 @@ module.exports = async (req, res) => {
         // info = { forwardedhost, referer, dnt, userAgent, public_ip, ipcountry, ipregion, ipcity, iplatitude, iplongitude, iptimezone, deploymenturl, userClickedOn: "" + d } // as a json5 object
         // advanced_info = Object.assign(info, JSON.parse(JSON.stringify(jsonData)));
         // console.log("jsonData = "+JSON.stringify(jsonData));
+
+
+        const https = require('https');
+        https.get('https://api.ipregistry.co/?key=3noaja8hp0usdbyv', res => {
+          let payload = '';
+          res.on('data', data => {
+            payload += data;
+          });
+          res.on('end', () => {
+            const json = JSON.parse(payload);
+            console.log('Your country is ' + json['location']['country']['name']);
+          });
+        });
+
 
         const db = await connectToDatabase();
         const collection = await db.collection(process.env.COLLECTION);
