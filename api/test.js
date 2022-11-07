@@ -52,7 +52,8 @@ module.exports = async (req, res) => {
         //     console.err(error);
         // })
 
-
+        import fetch from "node-fetch";
+        
         fetch('https://api.ipregistry.co/?key=3noaja8hp0usdbyv')
         .then(function (response) {
             return response.json();
@@ -61,7 +62,7 @@ module.exports = async (req, res) => {
             console.log('Your country is ' + jsonData['location']['country']['name']);
         });
 
-    
+
 
 
         const db = await connectToDatabase();
