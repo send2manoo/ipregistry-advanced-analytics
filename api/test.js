@@ -1,5 +1,7 @@
 // ----- /api/analytics.js -----
 // Import Dependencies
+import axios from 'axios';
+
 const url = require("url");
 const MongoClient = require("mongodb").MongoClient;
 
@@ -36,7 +38,21 @@ async function connectToDatabase() {
 
 // The main, exported, function of the endpoint,
 // dealing with the request and subsequent response
-import axios from 'axios';
+
+
+
+async function getUser() {
+  try {
+    jsonData = await axios.get('https://api.ipregistry.co/?key=3noaja8hp0usdbyv');
+
+    return jsonData.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+console.log(await getUser());
+
 
 module.exports = async (req, res) => {
     try {
@@ -56,8 +72,8 @@ module.exports = async (req, res) => {
 
         // COMMENTS BY MANOHAR ON NOV 7 18:49 PM INSTALL:-  npm i xmlhttprequest BEFORE USE XMLHttpRequest()
 
-        jsonData = await axios.get('https://api.ipregistry.co/?key=3noaja8hp0usdbyv');
-        console.log("JSON.stringify(jsonData) = "+JSON.stringify(jsonData));
+        // jsonData = await axios.get('https://api.ipregistry.co/?key=3noaja8hp0usdbyv');
+        // console.log("JSON.stringify(jsonData) = "+JSON.stringify(jsonData));
 
 
         const db = await connectToDatabase();
