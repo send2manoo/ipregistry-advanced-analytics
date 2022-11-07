@@ -56,7 +56,7 @@ module.exports = async (req, res) => {
         request.onreadystatechange = function() {
             if (request.readyState === 4 && request.status === 200) {
                 jsonData = JSON.parse(request.responseText);
-                console.log('Your country is ' + JSON.stringify(jsonData);
+                console.log('Your country is ' + JSON.stringify(jsonData));
             }
         };
         request.open('GET', 'https://api.ipregistry.co/?key=3noaja8hp0usdbyv', true);
