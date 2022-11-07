@@ -1,0 +1,9 @@
+{
+    "engines": {
+        "node": "16.x"
+    },
+    "dependencies": {
+        "mongodb": "^3.5.7",
+        "xmlhttprequest": "^1.8.0"
+    }
+}
