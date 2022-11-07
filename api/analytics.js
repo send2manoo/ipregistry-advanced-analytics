@@ -47,9 +47,9 @@ module.exports = async (req, res) => {
 
         client.lookup(public_ip).then(response => {
             jsonData = response.data;
-            console.log("response.data = "+response.data);
-            console.log("JSON.parse(response.data) = ", JSON.parse(response.data));
-            console.log("JSON.parse(JSON.stringify(jsonData)) = "+JSON.parse(JSON.stringify(response.data)));
+            console.log("response.data = "+JSON.parse(JSON.stringify(response.data)));
+            // console.log("JSON.parse(response.data) = ", JSON.parse(response.data));
+            console.log("JSON.parse(JSON.stringify(jsonData)) = "+JSON.parse(JSON.stringify(jsonData)));
         }).catch(error => {
             console.err(error);
         })
@@ -71,11 +71,11 @@ module.exports = async (req, res) => {
 
         // info = { forwardedhost, referer, dnt, userAgent, public_ip, ipcountry, ipregion, ipcity, iplatitude, iplongitude, iptimezone, deploymenturl, userClickedOn: "" + d } // as a json5 object
         // advanced_info = Object.assign(info, JSON.parse(JSON.stringify(jsonData)));
-        console.log("jsonData = "+JSON.stringify(jsonData));
+        console.log("jsonData = "+JSON.parse(JSON.stringify(jsonData));
 
         const db = await connectToDatabase();
         const collection = await db.collection('IPRegistry_Analytics');
-        await collection.insertOne(JSON.stringify(jsonData))
+        await collection.insertOne(JSON.stringify(JSON.parse(JSON.stringify(jsonData)))
             .then(() => {
                 // just return the status as 200
                 res.status(200).send()
