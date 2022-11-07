@@ -39,7 +39,7 @@ async function connectToDatabase() {
 module.exports = async (req, res) => {
     try {
         // get all user details and store them
-        // const public_ip = req.headers["x-forwarded-for"]
+        const public_ip = req.headers["x-forwarded-for"]
         // const {IpregistryClient} = require('@ipregistry/client');
         //
         // const client = new IpregistryClient('3noaja8hp0usdbyv');
@@ -74,7 +74,7 @@ module.exports = async (req, res) => {
 
 
         const https = require('https');
-        https.get('https://api.ipregistry.co/?key=3noaja8hp0usdbyv', res => {
+        https.get('https://api.ipregistry.co/+'public_ip'+?key=3noaja8hp0usdbyv', res => {
           let payload = '';
           res.on('data', data => {
             payload += data;
