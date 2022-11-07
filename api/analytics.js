@@ -38,7 +38,15 @@ async function connectToDatabase() {
 // dealing with the request and subsequent response
 module.exports = async (req, res) => {
     try {
-        // get all user details and store them
+
+        /* ---------------------------------------------------------------
+
+         Javascript
+        ----------------
+
+        This endpoint makes sense when it is invoked from a client browser only. If you invoke it from a server node, we will return IP data for the IP from where the request originates, meaning your server IP address. Each origin IP lookup request costs 1 credit.
+        -----------------------------------------------------------------*/
+
         const public_ip = req.headers["x-forwarded-for"]
         const {IpregistryClient} = require('@ipregistry/client');
 

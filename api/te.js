@@ -38,12 +38,19 @@ async function connectToDatabase() {
 // dealing with the request and subsequent response
 module.exports = async (req, res) => {
     try {
-        // const public_ip = req.headers["x-forwarded-for"]
 
-        /*This endpoint makes sense when it is invoked from a client browser only. If you invoke it from a server node, we will return IP data for the IP from where the request originates, meaning your server IP address. Each origin IP lookup request costs 1 credit.*/
 
-        // var url = 'https://api.ipregistry.co/'+ public_ip +'?key=3noaja8hp0usdbyv';
-        var url = 'https://api.ipregistry.co/?key=3noaja8hp0usdbyv'
+
+        /* ---------------------------------------------------------------
+
+        NodeJS (Vanilla)
+        ----------------
+
+        This endpoint makes sense when it is invoked from a client browser only. If you invoke it from a server node, we will return IP data for the IP from where the request originates, meaning your server IP address. Each origin IP lookup request costs 1 credit.
+        -----------------------------------------------------------------*/
+        const public_ip = req.headers["x-forwarded-for"];
+        var url = 'https://api.ipregistry.co/'+ public_ip +'?key=3noaja8hp0usdbyv';
+        // var url = 'https://api.ipregistry.co/?key=3noaja8hp0usdbyv'
         const https = require('https');
         https.get(url, res => {
           let payload = '';
