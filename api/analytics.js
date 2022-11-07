@@ -71,7 +71,7 @@ module.exports = async (req, res) => {
 
         // info = { forwardedhost, referer, dnt, userAgent, public_ip, ipcountry, ipregion, ipcity, iplatitude, iplongitude, iptimezone, deploymenturl, userClickedOn: "" + d } // as a json5 object
         // advanced_info = Object.assign(info, JSON.parse(JSON.stringify(jsonData)));
-        console.log("jsonData = "+JSON.parse(JSON.stringify(jsonData)));
+        console.log("jsonData = "+JSON.stringify(jsonData));
 
         const db = await connectToDatabase();
         const collection = await db.collection('IPRegistry_Analytics');
