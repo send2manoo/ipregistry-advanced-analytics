@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
         const public_ip = req.headers["x-forwarded-for"]
         const {IpregistryClient} = require('@ipregistry/client');
 
-        const client = new IpregistryClient('3noaja8hp0usdbyv', new InMemoryCache(16384), IpregistryOptions.filter('hostname,location.country.name'));
+        const client = new IpregistryClient('3noaja8hp0usdbyv', IpregistryOptions.filter('hostname,location.country.name'));
 
         client.lookup(public_ip).then(response => {
             jsonData = response.data;
